@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Data Rate Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script>
+        //rcvSocket receives data from server every 1 second
+        //its trigger handler is implemented in chart.js
+        const rcvSocket = new WebSocket("ws://localhost:8080/ws");
+
+        //sndSocket is used for updating packet rate for any client
+        const sndSocket = new WebSocket("ws://localhost:8080/control")
+       
+
+        function updateClientRate(clientId) {
+            const rate = document.getElementById(`client${clientId}-input`).value;
+            sndSocket.send(JSON.stringify({clientId: clientId, rate: parseInt(rate)}))
+        }
+    </script>
+</head>
+<body style="padding:10px; text-align: center;">
+    <h1>Client Data Rate Dashboard</h1>
+     <div>
+        <h2>Server Stats</h2>
+        <div>Total Packet Rate: <span id="server-rate"></span> packets/sec</div>
+        <div>Total Packets Received by Server: <span id="server-totPackets"></span> packets</div>
+    </div>
+    <div>
+        <h2>Client 1</h2>
+        <div>Rate: <span id="client1-rate"></span> packets/sec</div>
+        <div>Total Packets Received: <span id="client1-totPackets"></span> packets</div>
+        <input type="number" id="client1-input" placeholder="Set rate">
+        <button onclick="updateClientRate(1)">Update</button>
+    </div>
+    <div>
+        <h2>Client 2</h2>
+        <div>Rate: <span id="client2-rate"></span> packets/sec</div>
+        <div>Total Packets Received: <span id="client2-totPackets"></span> packets</div>
+        <input type="number" id="client2-input" placeholder="Set rate">
+        <button onclick="updateClientRate(2)">Update</button>
+    </div>
+    <div>
+        <h2>Client 3</h2>
+        <div>Rate: <span id="client3-rate"></span> packets/sec</div>
+        <div>Total Packets Received: <span id="client3-totPackets"></span> packets</div>
+        <input type="number" id="client3-input" placeholder="Set rate">
+        <button onclick="updateClientRate(3)">Update</button>
+    </div>
+    <canvas id="packetRateChart" width="400" height="200" style="margin:100px"></canvas>
+    
+    <script src="chart.js"></script>
+</body>
+</html>
