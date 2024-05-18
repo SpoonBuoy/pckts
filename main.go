@@ -198,8 +198,8 @@ func (s *Server) controlHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	//new client controller with totalNumberOfClients
-	c := client.NewClientController(totalClients)
+	//new client controller with totalNumberOfClients  and port addr of server
+	c := client.NewClientController(totalClients, ListenPort)
 
 	//new server
 	s := NewServer(c)

@@ -13,24 +13,25 @@ type ClientStats struct {
 
 // ClientController will be keeping track of clients with their clientId along with rate
 type ClientController struct {
-	Clients   map[int]*ClientStats
-	ClientsMu sync.Mutex
+	ServerPort int
+	Clients    map[int]*ClientStats
+	ClientsMu  sync.Mutex
 }
 
 // returns new clientController
-func NewClientController(totalClients int) *ClientController {
+func NewClientController(totalClients int, srvPort int) *ClientController {
 	c := make(map[int]*ClientStats)
 	for i := 1; i <= totalClients; i++ {
 		cs := ClientStats{Rate: 0}
 		c[i] = &cs
 	}
-	return &ClientController{Clients: c}
+	return &ClientController{Clients: c, ServerPort: srvPort}
 }
 
 // Client logic
 func (c *ClientController) StartClient(clientID int, controlURL string) {
 	//connect to server on port 9000
-	conn, err := net.Dial("tcp", fmt.Sprintf("localhost:%d", 9000))
+	conn, err := net.Dial("tcp", fmt.Sprintf("localhost:%d", c.ServerPort))
 	if err != nil {
 		panic(err)
 	}
