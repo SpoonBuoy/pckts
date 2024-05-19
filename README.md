@@ -27,10 +27,7 @@
     ├── chart.js    #dashboard config and logic
     └── index.html  #html
 ```
-<a href="https://drive.google.com/file/d/1_1217EbF-XbizTJfvjr7eVA2hU8kRjlw/view?usp=sharing"> 
-
 ### Demo Link 
-</a>
-
+[Cick Here](https://drive.google.com/file/d/1_1217EbF-XbizTJfvjr7eVA2hU8kRjlw/view?usp=sharing)
 ### Dashboard Still Image
 ![Local Image](./static/still.jpeg)
